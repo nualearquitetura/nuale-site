@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nualē · Portfólio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..700&family=DM+Sans:opsz,wght@9..40,300..600&display=swap" rel="stylesheet">
+<style>
+/* Layout: site editorial de escritório de arquitetura com páginas (início, portfólio, projeto, sobre, contato). Papel areia, tinta vinho, dourado em detalhes; fotos retas e linhas finas. */
+:root{
+  --papel:#EFEBE4; --papel2:#E6E0D6; --vinho:#4A1710; --vinho2:#661E16; --vinho3:#36100B;
+  --tinta:#2B1815; --apagado:#7A665C; --linha:rgba(74,23,16,.18);
+  --ouro:#C4A97A; --creme:#F6EBD6;
+  --titulo:'Bricolage Grotesque',system-ui,sans-serif;
+  --corpo:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.22,.7,.15,1);
+  --g:clamp(20px,4vw,56px);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--papel);color:var(--tinta);font:16px/1.65 var(--corpo);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:var(--titulo);font-weight:300;letter-spacing:-.03em;margin:0;text-wrap:balance}
+p{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:1.5px solid var(--vinho2);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.pad{padding-inline:var(--g)}
+.rot{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--apagado)}
+.sub{background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .5s var(--ease)}
+.sub:hover,a:hover .sub,button:hover .sub,.sub.on{background-size:100% 1px}
+.seta-link{display:inline-flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--vinho)}
+.seta-link .c{width:42px;height:42px;border-radius:50%;border:1px solid var(--linha);display:grid;place-items:center;transition:all .45s var(--ease)}
+.seta-link:hover .c{background:var(--vinho);color:var(--creme);border-color:var(--vinho);transform:rotate(-45deg)}
+
+/* CABEÇALHO */
+.cab{position:fixed;inset:0 0 auto;z-index:50;display:flex;justify-content:space-between;align-items:center;height:72px;background:var(--vinho);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .4s,height .4s}
+.cab.solido{border-color:rgba(232,220,198,.18);height:62px;box-shadow:0 6px 20px -12px rgba(0,0,0,.5)}
+.cab .logo{width:112px}
+.cab nav{display:flex;gap:clamp(16px,3vw,40px);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.cab nav a{color:#E8DCC6}
+.menu-btn{display:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#E8DCC6}
+.gaveta{position:fixed;inset:0;z-index:49;background:var(--vinho);color:var(--creme);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:var(--g);transform:translateY(-100%);transition:transform .7s var(--ease)}
+.gaveta.on{transform:none}
+.gaveta a{font-family:var(--titulo);font-weight:300;font-size:clamp(40px,11vw,64px);letter-spacing:-.03em;line-height:1.1}
+.gaveta a span{font-family:var(--corpo);font-size:12px;color:var(--ouro);letter-spacing:.2em;margin-right:14px;vertical-align:middle}
+.gaveta .zaps{margin-top:36px;display:grid;gap:4px;font-size:15px;color:var(--ouro)}
+@media (max-width:720px){.cab nav{display:none}.menu-btn{display:block}}
+
+/* TRANSIÇÃO DE PÁGINA */
+#app{min-height:100vh;padding-top:72px}
+.pagina{animation:entra .9s var(--ease) both}
+@keyframes entra{from{opacity:0;transform:translateY(24px)}}
+.cortina{position:fixed;inset:0;z-index:80;background:var(--vinho);transform:translateY(100%);pointer-events:none;display:grid;place-items:center;visibility:hidden}
+.cortina.cobre,.cortina.sai{visibility:visible}
+.cortina img{width:120px;opacity:0;transition:opacity .2s}
+.cortina.cobre{transition:transform .5s var(--ease);transform:none}
+.cortina.cobre img{opacity:1}
+.cortina.sai{transition:transform .6s var(--ease);transform:translateY(-100%)}
+
+/* ===== INÍCIO ===== */
+.case-hero{position:relative;padding-top:clamp(28px,4vw,48px)}
+.case-hero .topo{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--g);align-items:end;margin-bottom:clamp(24px,3vw,40px)}
+.case-hero h1{font-size:clamp(44px,7vw,112px);line-height:.95;color:var(--vinho)}
+.case-hero h1 span{display:block;overflow:hidden}
+.case-hero h1 span i{display:block;font-style:normal;animation:linha 1.2s var(--ease) both}
+.case-hero h1 span:nth-child(2) i{animation-delay:.08s}
+@keyframes linha{from{transform:translateY(105%)}}
+.case-hero .lado{display:grid;gap:22px;justify-items:start}
+.case-hero .lado p{color:var(--apagado);max-width:42ch}
+.case-img{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:clamp(10px,1.4vw,18px);height:min(78vh,760px)}
+.case-img a{position:relative;overflow:hidden;background:var(--papel2)}
+.case-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease)}
+.case-img a:hover img{transform:scale(1.04)}
+.case-img a:nth-child(2){margin-top:12%}
+.case-img a:nth-child(3){margin-bottom:12%}
+.selo-case{position:absolute;left:16px;top:16px;background:var(--vinho);color:var(--creme);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;padding:8px 12px}
+@media (max-width:820px){.case-hero .topo{grid-template-columns:1fr}.case-img{grid-template-columns:1fr 1fr;height:auto}.case-img a:first-child{grid-column:span 2;aspect-ratio:4/5}.case-img a{aspect-ratio:4/5;margin:0!important}}
+
+.intro{display:grid;grid-template-columns:1fr;gap:clamp(18px,2.4vw,28px);padding-block:clamp(80px,11vw,160px)}
+.intro p.grande{font-family:var(--titulo);font-weight:300;font-size:clamp(26px,3.3vw,46px);line-height:1.18;letter-spacing:-.02em;color:var(--vinho)}
+.intro p.grande em{font-style:italic;font-weight:600;color:var(--vinho);font-synthesis:style}
+.intro .acoes{margin-top:36px}
+@media (max-width:820px){.intro{grid-template-columns:1fr}}
+
+.secao-topo{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(24px,3vw,40px);border-top:1px solid var(--vinho);padding-top:18px}
+.secao-topo h2{font-size:clamp(34px,4.6vw,64px);line-height:1;color:var(--vinho)}
+
+/* cards de projeto */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px) clamp(12px,1.6vw,22px)}
+.card{display:grid;gap:14px;align-content:start}
+.card .im{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--papel2)}
+.card .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease),opacity .8s}
+.card .im img.b{opacity:0}
+.card:hover .im img.a{transform:scale(1.05)}
+.card:hover .im img.b{opacity:1;transform:scale(1.05)}
+.card .info{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-top:1px solid var(--linha);padding-top:12px}
+.card h3{font-size:clamp(20px,1.9vw,26px);color:var(--vinho);line-height:1.1}
+.card .meta{font-size:13px;color:var(--apagado);white-space:nowrap}
+.card.breve{cursor:default}
+.card.breve .im{display:grid;place-items:center;background:var(--papel2)}
+.card.breve .im span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--apagado);border:1px solid var(--linha);padding:10px 14px}
+.card.breve h3{color:var(--apagado)}
+@media (max-width:900px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.cards{grid-template-columns:1fr}}
+
+.faixa-cta{margin-top:clamp(90px,12vw,170px);background:var(--vinho);color:var(--creme);padding-block:clamp(56px,8vw,110px);display:grid;grid-template-columns:1.4fr 1fr;gap:var(--g);align-items:end}
+.faixa-cta h2{font-size:clamp(38px,5.6vw,84px);line-height:.95}
+.faixa-cta h2 em{font-style:normal;color:var(--ouro)}
+.faixa-cta .seta-link{color:var(--creme);justify-self:end}
+.faixa-cta .seta-link .c{border-color:rgba(196,169,122,.6);color:var(--ouro)}
+.faixa-cta .seta-link:hover .c{background:var(--ouro);color:var(--vinho)}
+@media (max-width:820px){.faixa-cta{grid-template-columns:1fr}.faixa-cta .seta-link{justify-self:start}}
+
+
+/* ===== INÍCIO: colagem ===== */
+.colagem{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(60px,7.4vw,108px);gap:clamp(8px,1.2vw,16px);padding-block:clamp(24px,3vw,40px) clamp(60px,8vw,110px)}
+.tile{position:relative;overflow:hidden;background:var(--papel2)}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.8s var(--ease)}
+.tile img.novo{opacity:0;transform:scale(1.06);transition:opacity 1.4s ease,transform 2.4s var(--ease)}
+.tile img.novo.on{opacity:1;transform:none}
+.tile:hover img{transform:scale(1.04)}
+.home-topo{display:grid;grid-template-columns:1fr;gap:clamp(18px,2.4vw,28px);align-items:start;padding-top:clamp(32px,5vw,72px);padding-bottom:clamp(8px,1vw,12px)}
+.home-topo h1{font-size:clamp(18px,5.6vw,96px);white-space:nowrap;line-height:1;color:var(--vinho);margin-top:22px}
+.home-topo h1 span{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.home-topo h1 span i{display:inline-block;font-style:normal;animation:linha 1.2s var(--ease) both}
+.home-topo h1 span:nth-child(2) i{animation-delay:.1s}
+.ht-lado{display:grid;gap:22px;justify-items:start}
+.ht-lado p{color:var(--apagado);max-width:40ch}
+.colagem{padding-block:clamp(24px,3vw,40px) 0}
+.t0{grid-column:1 / span 6;grid-row:1 / span 6}
+.t1{grid-column:7 / span 3;grid-row:1 / span 4}
+.t2{grid-column:10 / span 3;grid-row:2 / span 4}
+.t3{grid-column:7 / span 3;grid-row:5 / span 3}
+.t4{grid-column:10 / span 3;grid-row:6 / span 2}
+@media (max-width:820px){.home-topo{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .colagem{grid-template-columns:repeat(6,1fr);grid-auto-rows:16vw}
+  .t0{grid-column:1 / span 6;grid-row:1 / span 6}
+  .t1{grid-column:1 / span 3;grid-row:7 / span 4}
+  .t2{grid-column:4 / span 3;grid-row:7 / span 5}
+  .t3{grid-column:1 / span 3;grid-row:11 / span 4}
+  .t4{grid-column:4 / span 3;grid-row:12 / span 3}
+}
+
+/* ===== DIFERENCIAL ===== */
+.dif{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--g);align-items:center;background:var(--vinho);color:var(--creme);padding-block:clamp(70px,9vw,130px);margin-block:clamp(40px,6vw,80px)}
+.dif .rot{color:var(--ouro)}
+.dif h2{font-size:clamp(34px,4.6vw,64px);line-height:1;margin-top:14px;color:var(--creme)}
+.dif h2 em{font-style:normal;color:var(--ouro)}
+.dif-lead{color:#DCCFC2;margin-top:20px;max-width:48ch;font-size:clamp(16px,1.5vw,18px)}
+.dif-lista{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 var(--g);border-top:1px solid rgba(196,169,122,.4)}
+.dif-lista li{padding:16px 0;border-bottom:1px solid rgba(196,169,122,.25);display:grid;gap:4px}
+.dif-lista b{font-family:var(--titulo);font-weight:400;font-size:19px;color:var(--creme)}
+.dif-lista span{font-size:14.5px;color:#CDBFAE}
+.cel-wrap{display:grid;place-items:center}
+.cel{width:min(300px,78vw);aspect-ratio:9/18.5;border-radius:42px;background:#1E0906;padding:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(196,169,122,.4)}
+.cel-tela{position:relative;height:100%;border-radius:32px;background:var(--papel);overflow:hidden;color:var(--tinta);padding:20px 16px;display:flex;flex-direction:column;gap:14px}
+.cel-top{display:flex;justify-content:space-between;align-items:center;background:var(--vinho);margin:-20px -16px 0;padding:26px 16px 14px}
+.cel-top img{width:62px}
+.cel-top span{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro)}
+.cel-card{background:#fff;border-radius:14px;padding:14px;display:grid;gap:6px;box-shadow:0 6px 18px -10px rgba(43,24,21,.3)}
+.cel-card small{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--apagado)}
+.cel-card b{font-family:var(--titulo);font-weight:500;font-size:17px;color:var(--vinho)}
+.cel-prog{height:6px;border-radius:6px;background:var(--papel2);overflow:hidden;margin-top:4px}
+.cel-prog i{display:block;height:100%;width:0;background:var(--ouro);border-radius:6px}
+.cel-pct{display:flex;gap:6px;align-items:baseline;font-size:11px;color:var(--apagado)}
+.cel-pct span:first-child{font-family:var(--titulo);font-size:20px;color:var(--vinho);font-variant-numeric:tabular-nums}
+.cel-etapas{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.cel-etapas li{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--linha);font-size:12.5px}
+.cel-etapas li i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--linha)}
+.cel-etapas li.ok i{background:var(--vinho2);border-color:var(--vinho2)}
+.cel-etapas li.ag i{border-color:var(--ouro);background:var(--ouro);animation:pulsa 1.6s infinite}
+@keyframes pulsa{50%{box-shadow:0 0 0 5px rgba(196,169,122,.25)}}
+.cel-etapas em{font-style:normal;font-size:10px;color:var(--apagado)}
+.cel-etapas li.ag em{color:var(--vinho2);font-weight:600}
+.cel-aviso{position:absolute;left:12px;right:12px;bottom:16px;background:var(--vinho);color:var(--creme);border-radius:14px;padding:12px 14px;display:grid;gap:2px;font-size:12px;transform:translateY(140%);transition:transform .7s var(--ease)}
+.cel-aviso b{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro);font-weight:600}
+.cel-aviso.on{transform:none}
+@media (max-width:860px){.dif{grid-template-columns:1fr}.dif-lista{grid-template-columns:1fr}}
+.igs{margin-top:clamp(36px,5vw,60px);display:grid;grid-template-columns:1fr 2fr;gap:var(--g);align-items:start}
+.ig-lista{display:grid;border-top:1px solid rgba(196,169,122,.5)}
+.ig-lista a{display:flex;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid rgba(196,169,122,.3);font-family:var(--titulo);font-weight:300;font-size:clamp(20px,2.4vw,30px);color:var(--creme);transition:padding .5s var(--ease),color .3s}
+.ig-lista a:hover{padding-left:12px;color:var(--ouro)}
+.ig-rod{text-transform:none;letter-spacing:.04em;font-size:13px;color:var(--ouro)}
+.ig-rod:hover{color:var(--creme)}
+@media (max-width:820px){.igs{grid-template-columns:1fr}}
+.posic{padding-block:clamp(70px,9vw,130px) 0;display:grid;gap:clamp(18px,2.4vw,28px)}
+.posic-grande{font-family:var(--titulo);font-weight:300;font-size:clamp(20px,5.6vw,68px);line-height:1.08;letter-spacing:-.025em;color:var(--vinho);text-wrap:pretty}
+.posic-grande span{display:block}
+.posic-grande em{font-style:italic;font-weight:600;color:inherit;font-synthesis:style}
+.posic-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--g);border-top:1px solid var(--linha);padding-top:22px;margin-top:10px}
+.posic-cols p{color:var(--apagado)}
+@media (max-width:760px){.posic-cols{grid-template-columns:1fr;gap:16px}}
+/* ===== PORTFÓLIO ===== */
+.cab-pag{padding-top:clamp(40px,6vw,90px);padding-bottom:clamp(32px,4vw,56px);display:grid;gap:clamp(14px,2vw,22px)}
+.cab-pag h1{font-size:clamp(56px,10vw,160px);line-height:.88;color:var(--vinho)}
+.cab-pag p{color:var(--apagado);max-width:52ch;font-size:clamp(16px,1.5vw,19px)}
+@media (max-width:820px){.cab-pag{grid-template-columns:1fr}}
+.filtros{display:flex;gap:clamp(16px,2.6vw,32px);flex-wrap:wrap;border-top:1px solid var(--vinho);padding:16px 0 clamp(28px,4vw,48px);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.filtros button{color:var(--apagado)}
+.filtros button[aria-pressed="true"]{color:var(--vinho)}
+.filtros sup{font-size:9px;margin-left:3px}
+
+/* ===== PROJETO ===== */
+.voltar{display:inline-flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--vinho);margin-top:clamp(28px,4vw,48px)}
+.proj-topo{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--g);align-items:end;padding-block:clamp(28px,4vw,48px) clamp(28px,4vw,48px)}
+.proj-topo h1{font-size:clamp(46px,7.4vw,118px);line-height:.92;color:var(--vinho)}
+.ficha{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--vinho)}
+.ficha div{padding:12px 0;border-bottom:1px solid var(--linha)}
+.ficha div:nth-child(odd){padding-right:16px}
+.ficha span{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--apagado)}
+.ficha b{font-weight:500;color:var(--vinho);font-size:15px}
+@media (max-width:820px){.proj-topo{grid-template-columns:1fr}}
+.proj-capa{position:relative;overflow:hidden;height:min(86vh,860px);background:var(--papel2)}
+.proj-capa img{width:100%;height:100%;object-fit:cover;object-position:center 60%}
+@media (max-width:820px){.proj-capa{height:auto;aspect-ratio:4/5}}
+.texto-proj{display:grid;grid-template-columns:1fr 2fr;gap:var(--g);padding-block:clamp(70px,9vw,130px)}
+.texto-proj .corpo{display:grid;gap:22px}
+.texto-proj .lead{font-family:var(--titulo);font-weight:300;font-size:clamp(24px,2.8vw,38px);line-height:1.2;color:var(--vinho);letter-spacing:-.02em}
+.texto-proj p{color:var(--apagado);max-width:62ch}
+.feito{display:grid;grid-template-columns:1fr 1fr;gap:0 var(--g);margin-top:12px;border-top:1px solid var(--linha)}
+.feito div{padding:14px 0;border-bottom:1px solid var(--linha);display:grid;grid-template-columns:34px 1fr;gap:8px;font-size:15px}
+.feito b{font-family:var(--titulo);font-weight:400;color:var(--ouro)}
+@media (max-width:820px){.texto-proj{grid-template-columns:1fr}.feito{grid-template-columns:1fr}}
+.versoes{display:flex;gap:24px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.versoes button{color:var(--apagado);padding-bottom:6px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.versoes button[aria-pressed="true"]{color:var(--vinho);border-color:var(--vinho)}
+.grade{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.4vw,20px)}
+.fig{position:relative;overflow:hidden;background:var(--papel2);cursor:zoom-in;margin:0}
+.fig img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease)}
+.fig:hover img{transform:scale(1.04)}
+.fig figcaption{position:absolute;left:14px;bottom:12px;color:var(--creme);font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:0;transform:translateY(6px);transition:all .5s var(--ease);text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.fig:hover figcaption{opacity:1;transform:none}
+.fig.s0{grid-column:1 / span 7;aspect-ratio:4/5}
+.fig.s1{grid-column:8 / span 5;aspect-ratio:4/5;margin-top:22%}
+.fig.s2{grid-column:2 / span 5;aspect-ratio:4/5}
+.fig.s3{grid-column:7 / span 6;aspect-ratio:4/5;margin-top:-14%}
+.fig.s4{grid-column:1 / span 4;aspect-ratio:4/5}
+.fig.s5{grid-column:5 / span 4;aspect-ratio:4/5}
+.fig.s6{grid-column:9 / span 4;aspect-ratio:4/5}
+@media (max-width:760px){.fig{grid-column:span 6!important;margin-top:0!important}.fig.s0,.fig.s3{grid-column:1 / -1!important}.fig figcaption{opacity:1;transform:none}}
+.prox{margin-top:clamp(80px,10vw,140px);border-top:1px solid var(--vinho);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding-top:28px;padding-bottom:clamp(60px,8vw,110px);margin-inline:var(--g);padding-inline:0}
+.prox h2{font-size:clamp(34px,5.4vw,80px);line-height:1;color:var(--vinho);transition:transform .6s var(--ease)}
+.prox:hover h2{transform:translateX(12px)}
+
+/* ===== SOBRE ===== */
+.sobre-hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--g);padding-top:clamp(40px,6vw,90px)}
+.sobre-hero h1{font-size:clamp(48px,8vw,128px);line-height:.9;color:var(--vinho)}
+.sobre-hero .img{aspect-ratio:4/5;overflow:hidden;background:var(--papel2)}
+.sobre-hero .img img{width:100%;height:100%;object-fit:cover}
+.sobre-hero .txt{display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.sobre-hero .txt p{color:var(--apagado);max-width:46ch;font-size:17px}
+.sobre-hero .txt p.grande{font-family:var(--titulo);font-weight:300;font-size:clamp(24px,2.6vw,34px);line-height:1.22;color:var(--vinho);letter-spacing:-.02em}
+@media (max-width:820px){.sobre-hero{grid-template-columns:1fr}}
+.bloco{padding-block:clamp(80px,10vw,140px)}
+.socias{display:grid;grid-template-columns:1fr 1fr;gap:var(--g)}
+.socia{display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,2.4vw,32px);align-items:start;border-top:1px solid var(--linha);padding-top:22px}
+.socia .mono{width:clamp(84px,9vw,120px);aspect-ratio:4/5;background:var(--vinho);color:var(--ouro);display:grid;place-items:center;font-family:var(--titulo);font-weight:300;font-size:clamp(40px,4.6vw,60px)}
+.socia h3{font-size:clamp(30px,3.6vw,48px);color:var(--vinho);line-height:1}
+.socia p{color:var(--apagado);margin-top:10px}
+.socia a{display:inline-block;margin-top:14px;color:var(--vinho);font-size:14px}
+@media (max-width:820px){.socias{grid-template-columns:1fr}}
+.valores{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g)}
+.valores div{border-top:1px solid var(--linha);padding-top:16px}
+.valores b{font-family:var(--titulo);font-weight:400;font-size:14px;color:var(--ouro)}
+.valores h3{font-size:clamp(22px,2.2vw,28px);color:var(--vinho);margin-top:8px}
+.valores p{color:var(--apagado);margin-top:8px;font-size:15px}
+@media (max-width:820px){.valores{grid-template-columns:1fr}}
+.etapas{list-style:none;margin:0;padding:0;border-top:1px solid var(--vinho);counter-reset:e}
+.etapas li{display:grid;grid-template-columns:80px 1fr 1.4fr;gap:16px;padding:24px 0;border-bottom:1px solid var(--linha);counter-increment:e;align-items:baseline}
+.etapas li::before{content:"0" counter(e);font-family:var(--titulo);font-size:14px;color:var(--apagado)}
+.etapas h3{font-size:clamp(22px,2.4vw,32px);color:var(--vinho)}
+.etapas p{color:var(--apagado)}
+@media (max-width:820px){.etapas li{grid-template-columns:44px 1fr}.etapas li p{grid-column:2}}
+.entregas{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linha)}
+.entregas div{padding:20px 20px 20px 0;border-bottom:1px solid var(--linha)}
+.entregas h3{font-size:20px;color:var(--vinho);font-weight:400}
+.entregas p{color:var(--apagado);font-size:14.5px;margin-top:4px}
+@media (max-width:820px){.entregas{grid-template-columns:1fr}}
+
+/* ===== CONTATO ===== */
+.contato{background:var(--vinho);color:var(--creme);min-height:calc(100vh - 72px);padding-block:clamp(48px,7vw,100px)}
+.contato .rot{color:var(--ouro)}
+.contato h1{font-size:clamp(52px,9vw,140px);line-height:.9;margin-top:18px;color:var(--creme)}
+.contato h1 em{font-style:normal;color:var(--ouro)}
+.pessoas{margin-top:clamp(40px,6vw,80px);border-top:1px solid rgba(196,169,122,.5)}
+.pessoa{display:grid;grid-template-columns:1fr 1fr auto;align-items:center;gap:20px;padding:clamp(22px,3vw,34px) 0;border-bottom:1px solid rgba(196,169,122,.3);transition:padding .5s var(--ease)}
+.pessoa:hover{padding-left:16px}
+.pessoa .nm{font-family:var(--titulo);font-weight:300;font-size:clamp(34px,5vw,68px);letter-spacing:-.03em;line-height:1}
+.pessoa .tel{color:var(--ouro);font-size:clamp(15px,1.5vw,18px);font-variant-numeric:tabular-nums}
+.pessoa .ir{width:58px;height:58px;border-radius:50%;border:1px solid rgba(196,169,122,.6);display:grid;place-items:center;color:var(--ouro);transition:all .45s var(--ease)}
+.pessoa:hover .ir{background:var(--ouro);color:var(--vinho);transform:rotate(-45deg)}
+.pessoa small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,235,214,.6);margin-bottom:4px}
+@media (max-width:640px){.pessoa{grid-template-columns:1fr auto}.pessoa .tel{grid-column:1;grid-row:2}.pessoa .ir{grid-row:1 / span 2;grid-column:2;width:48px;height:48px}}
+.form{margin-top:clamp(56px,8vw,100px);display:grid;grid-template-columns:1fr 2fr;gap:var(--g)}
+.form .campos{display:grid;gap:24px}
+.form .dois{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.form label{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);margin-bottom:6px}
+.form input,.form textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(246,235,214,.35);padding:10px 0;color:var(--creme);font:inherit;font-size:18px;border-radius:0}
+.form textarea{min-height:90px;resize:vertical}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--ouro)}
+.tipos{display:flex;flex-wrap:wrap;gap:8px}
+.tipos label{position:relative}
+.tipos input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.tipos span{display:inline-block;padding:8px 14px;border:1px solid rgba(196,169,122,.45);border-radius:30px;font-size:14px;cursor:pointer;transition:all .25s}
+.tipos input:checked+span{background:var(--ouro);color:var(--vinho);border-color:var(--ouro)}
+.tipos input:focus-visible+span{outline:1.5px solid var(--ouro);outline-offset:2px}
+.envia{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.envia a{display:inline-flex;gap:10px;align-items:center;padding:14px 22px;border-radius:40px;background:var(--creme);color:var(--vinho);font-weight:600;font-size:15px;transition:background .3s}
+.envia a:hover{background:var(--ouro)}
+.aviso{font-size:13px;color:rgba(246,235,214,.6)}
+@media (max-width:820px){.form{grid-template-columns:1fr}.form .dois{grid-template-columns:1fr}}
+
+.rodape{background:var(--vinho3);color:rgba(246,235,214,.6);padding-block:30px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.rodape img{width:104px}
+.rodape nav{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.rodape nav a:hover{color:var(--ouro)}
+@media (max-width:720px){.rodape{grid-template-columns:1fr;justify-items:start}.rodape nav{justify-content:start}}
+
+/* VISUALIZADOR */
+.vis{position:fixed;inset:0;z-index:90;background:#1E0906;display:none;flex-direction:column;color:var(--creme)}
+.vis.open{display:flex;animation:fade .45s ease}
+@keyframes fade{from{opacity:0}}
+.vis .topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px var(--g)}
+.vis .topo b{font-family:var(--titulo);font-weight:300;font-size:22px;letter-spacing:-.02em}
+.vis .topo small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);margin-top:2px}
+.vis .x{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--creme);border:1px solid rgba(246,235,214,.3);border-radius:30px;padding:10px 16px}
+.vis .trilho{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;min-height:0}
+.vis .trilho::-webkit-scrollbar{display:none}
+.vis .slide{flex:0 0 100%;scroll-snap-align:center;display:grid;place-items:center;padding:0 var(--g);min-height:0}
+.vis .slide img{max-width:100%;max-height:100%;object-fit:contain}
+.vis .base{display:flex;justify-content:space-between;align-items:center;padding:16px var(--g) 22px;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.vis .base .ct{color:var(--ouro);font-variant-numeric:tabular-nums}
+.vis .setas{display:flex;gap:10px}
+.vis .setas button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(246,235,214,.3);color:var(--creme)}
+.card h3,.proj-topo h1,.prox h2,.vis .topo b{text-transform:uppercase}
+.card .info{flex-direction:column;align-items:flex-start;gap:4px}
+.card h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-size:clamp(16px,1.45vw,21px)}
+.card .meta{font-size:13px}
+.proj-topo h1{white-space:nowrap;font-size:clamp(26px,4.2vw,68px)}
+.proj-cidade{display:block;margin-top:12px;color:var(--apagado);font-size:15px;letter-spacing:.02em}
+.prox h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(24px,4.2vw,64px)}
+
+/* ===== CELULAR: escala mais contida ===== */
+@media (max-width:600px){
+  body{font-size:15px;line-height:1.6}
+  :root{--g:20px}
+  .rot{font-size:10px;letter-spacing:.2em}
+  .cab{height:58px}.cab.solido{height:54px}
+  #app{padding-top:58px}
+  .cab .logo{width:92px}
+  .menu-btn{font-size:11px}
+  .gaveta{justify-content:flex-start;padding-top:110px;gap:2px}
+  .gaveta a{font-size:34px;line-height:1.25}
+  .gaveta a span{font-size:10px;margin-right:12px}
+  .gaveta .zaps{margin-top:28px;font-size:13.5px}
+  .home-topo{padding-top:28px;gap:14px}
+  .home-topo h1{white-space:normal;font-size:40px;line-height:1.02;font-weight:400;margin-top:14px}
+  .home-topo h1 span{display:block}
+  .home-topo h1 span:last-child i{font-style:italic;font-weight:600;font-synthesis:style}
+  .ht-lado p{font-size:15px}
+  .seta-link{font-size:11px;gap:10px}
+  .seta-link .c{width:36px;height:36px}
+  .intro{padding-block:56px}
+  .intro p.grande{font-size:23px;line-height:1.25}
+  .secao-topo h2,.cab h2{font-size:30px}
+  .cab-pag h1{font-size:52px}
+  .cab-pag p{font-size:15px}
+  .proj-topo h1{font-size:26px}
+  .texto-proj .lead{font-size:21px}
+  .dif{padding-block:56px}
+  .dif h2{font-size:30px}
+  .dif-lead{font-size:15px}
+  .dif-lista b{font-size:17px}
+  .dif-lista span{font-size:14px}
+  .cel{width:min(250px,70vw)}
+  .faixa-cta h2{font-size:32px}
+  .sobre-hero h1{font-size:46px}
+  .sobre-hero .txt p.grande{font-size:20px}
+  .sobre-hero .txt p{font-size:15px}
+  .posic-grande{font-size:clamp(17px,5.4vw,24px)}
+  .socia h3{font-size:24px}
+  .valores h3,.etapas h3{font-size:20px}
+  .contato h1{font-size:44px}
+  .pessoa{padding:18px 0}
+  .pessoa .nm{font-size:26px}
+  .pessoa .tel{font-size:14px}
+  .pessoa .ir{width:42px;height:42px}
+  .ig-lista a{font-size:18px;padding:13px 0}
+  .form input,.form textarea{font-size:16px}
+  .tipos span{font-size:13px;padding:7px 12px}
+  .envia a{font-size:14px;padding:12px 18px}
+  .card h3{font-size:17px}
+  .prox h2{font-size:24px}
+  .rodape{font-size:10px}
+}
+
+/* ===== AJUSTES CELULAR ===== */
+.home-topo h1 em{font-style:italic;font-weight:600;font-synthesis:style}
+@media (max-width:600px){
+  body{font-size:15px;line-height:1.6}
+  .rot{font-size:10px;letter-spacing:.18em}
+  .cab{height:56px}.cab.solido{height:52px}.cab .logo{width:92px}
+  .menu-btn{font-size:11px}
+  #app{padding-top:56px}
+  .gaveta a{font-size:30px;line-height:1.25}
+  .gaveta .zaps{font-size:13px;margin-top:28px}
+  .home-topo{padding-top:28px}
+  .home-topo h1{white-space:normal;font-size:38px;line-height:1.02;margin-top:14px}
+  .home-topo h1 span{display:inline;padding:0}
+  .home-topo h1 span i{display:inline}
+  .ht-lado p{font-size:15px}
+  .seta-link{font-size:11px;gap:10px}.seta-link .c{width:36px;height:36px}
+  section.cap,.bloco{padding-block:48px}
+  .intro{padding-block:56px}
+  .intro p.grande{font-size:22px}
+  .secao-topo h2{font-size:28px}
+  .cab-pag{padding-top:28px;padding-bottom:20px}.cab-pag h1{font-size:44px}.cab-pag p{font-size:15px}
+  .filtros{font-size:11px;padding-bottom:20px}
+  .card h3{font-size:16px}.card .meta{font-size:12px}
+  .faixa-cta{padding-block:48px}.faixa-cta h2{font-size:32px}
+  .dif{padding-block:52px}.dif h2{font-size:30px}.dif-lead{font-size:15px}.dif-lista b{font-size:16px}.dif-lista span{font-size:13.5px}
+  .cel{width:240px}
+  .proj-topo h1{font-size:28px}.proj-cidade{font-size:13px}
+  .ficha b{font-size:14px}
+  .texto-proj{padding-block:48px}.texto-proj .lead{font-size:21px}.feito div{font-size:14px}
+  .prox h2{font-size:24px}
+  .sobre-hero h1{font-size:42px}.sobre-hero .txt p{font-size:15px}.sobre-hero .txt p.grande{font-size:21px}
+  .posic{padding-top:48px}
+  .socia h3{font-size:26px}.socia .mono{width:72px;font-size:34px}
+  .valores h3,.etapas h3{font-size:20px}.valores p,.etapas p{font-size:14.5px}
+  .entregas h3{font-size:17px}
+  .contato{padding-block:40px}
+  .contato h1{font-size:42px}
+  .pessoa{padding:18px 0;gap:6px 14px}.pessoa .nm{font-size:26px}.pessoa .tel{font-size:14px}.pessoa .ir{width:40px;height:40px}.pessoa small{font-size:10px}
+  .ig-lista a{font-size:17px;padding:13px 0}
+  .form label,.tipos span{font-size:13px}.form input,.form textarea{font-size:16px}
+  .envia a{font-size:14px;padding:12px 18px}
+  .rodape{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="cab pad" id="cab">
+  <a href="#inicio" aria-label="Nualē, início"><img class="logo" src="img/logo-bege.png" alt="nualē"></a>
+  <nav aria-label="Principal" id="navPrin">
+    <a href="#inicio" class="sub" data-r="inicio">Início</a><a href="#portfolio" class="sub" data-r="portfolio">Portfólio</a><a href="#sobre" class="sub" data-r="sobre">Sobre</a><a href="#contato" class="sub" data-r="contato">Contato</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="gaveta">Menu</button>
+</header>
+<div class="gaveta" id="gaveta">
+  <a href="#inicio"><span>01</span>Início</a><a href="#portfolio"><span>02</span>Portfólio</a><a href="#sobre"><span>03</span>Sobre</a><a href="#contato"><span>04</span>Contato</a>
+  <div class="zaps"><span>Anna Julia Portilho · (24) 99266-2596</span><span>Laís Hotz · (24) 99259-6896</span><a href="https://www.instagram.com/nualearquitetura/" target="_blank" rel="noopener" style="font-family:var(--corpo);font-size:15px;letter-spacing:0;color:var(--creme)">@nualearquitetura</a></div>
+</div>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="rodape pad">
+  <img src="img/logo-ouro.png" alt="nualē">
+  <nav aria-label="Rodapé"><a href="#inicio">Início</a><a href="#portfolio">Portfólio</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav>
+  <a class="ig-rod" href="https://www.instagram.com/nualearquitetura/" target="_blank" rel="noopener">@nualearquitetura</a>
+</footer>
+
+<div class="cortina" id="cortina" aria-hidden="true"><img src="img/logo-ouro.png" alt=""></div>
+
+<div class="vis" id="vis" role="dialog" aria-modal="true" aria-labelledby="visT">
+  <div class="topo"><div><b id="visT"></b><small id="visS"></small></div><button class="x" id="visX">Fechar</button></div>
+  <div class="trilho" id="visTrilho"></div>
+  <div class="base"><span class="ct" id="visC"></span><div class="setas"><button id="visA" aria-label="Anterior">←</button><button id="visP" aria-label="Próxima">→</button></div></div>
+</div>
+
+<script>
+/* =====================================================================
+   CONTEÚDO DO SITE · edite aqui
+   ===================================================================== */
+const IG_ESCRITORIO="nualearquitetura";
+const igLink=h=>`https://www.instagram.com/${h}/`;
+const CONTATOS=[
+  {nome:"Anna",completo:"Anna Julia Portilho",ig:"arquiteta.annajuliaportilho",cargo:"Arquiteta",fone:"(24) 99266-2596",zap:"5524992662596"},
+  {nome:"Laís",completo:"Laís Hotz",ig:"arquiteta.laishotz",cargo:"Arquiteta",fone:"(24) 99259-6896",zap:"5524992596896"},
+];
+
+const PROJETOS=[
+  {id:"casa-de-campo-refugio",nome:"Casa de campo Refúgio",tipo:"Residencial",local:"Itamonte, MG",ano:"",escopo:"Arquitetura, áreas externas e imagens 3D",
+   capa:"r01",capa2:"r03",
+   lead:"Uma casa de campo para desacelerar, aberta para as montanhas.",
+   texto:["A casa combina pedra, tijolo aparente e estrutura em madeira roliça sob um telhado de águas assimétricas, com grandes portas de vidro que abrem a sala para a varanda.",
+          "Do lado de fora, o terreno se organiza em espaços para ficar: área gourmet sob pergolado de madeira, piscina e spa no deck de pedra, fogueira com balanço suspenso e um deck com cinema ao ar livre de frente para a vista."],
+   feito:["Casa em pedra, tijolo e madeira roliça","Telhado de águas assimétricas com forro em madeira","Área gourmet sob pergolado de madeira","Piscina e spa em deck de pedra","Fogueira com balanço suspenso","Deck com cinema ao ar livre"],
+   versoes:{"Imagens":["r01","r02","r03","r04","r05","r06","r07","r08","r09","r10","r11","r12"]}},
+  {id:"quarto-gm",nome:"Quarto GM",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"q01",capa2:"q06",
+   lead:"Um quarto para dois irmãos, com um céu estrelado no teto e espaço para crescer.",
+   texto:["As duas camas dividem uma cabeceira estofada contínua, emoldurada em madeira com luz embutida, sobre um papel de parede xadrez em verde e azul. No teto, um rebaixo circular iluminado traz fibras óticas que desenham um céu estrelado.",
+          "Do outro lado, a bancada de estudo para dois se integra a um painel de madeira com pegboard, prateleiras móveis e um nicho expositor iluminado para as coleções. O armário azul com portas em arco completa o quarto."],
+   feito:["Cabeceira estofada contínua com moldura iluminada","Teto com rebaixo circular e céu estrelado","Papel de parede xadrez","Bancada de estudo dupla com gaveteiro central","Painel em pegboard com prateleiras móveis","Nicho expositor iluminado e armário com portas em arco"],
+   versoes:{"Imagens":["q01","q02","q03","q04","q05","q06","q07","q08","q09","q10","q11","q12","q13","q14"]}},
+  {id:"quarto-jl",nome:"Quarto JL",tipo:"Residencial",local:"Barra Mansa, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"j01",capa2:"j02",
+   lead:"Um quarto de bebê suave e luminoso, em tons de amarelo, verde e madeira.",
+   texto:["O papel listrado em amarelo encontra um lambri verde com molduras, e a luz natural entra por cortinas de linho com barrado amarelo franzido sob uma bandô recortada em ondas.",
+          "O berço em palhinha recebe um dossel com coroa iluminada, a poltrona de amamentação ganha um canto próprio com luminária de piso, e a cômoda trocador e o armário em palhinha completam o quarto com delicadeza."],
+   feito:["Papel listrado com lambri verde e molduras","Berço em palhinha com dossel iluminado","Canto de amamentação com poltrona giratória","Cortinas com barrado franzido e bandô em ondas","Cômoda trocador com pés torneados","Armário com portas em palhinha"],
+   versoes:{"Imagens":["j01","j02","j03","j04","j05","j06","j07"]}},
+  {id:"suite-bj",nome:"Suíte BJ",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"u01",capa2:"u09",
+   lead:"Uma suíte aconchegante, envolvida em madeira clara e luz indireta.",
+   texto:["A parede da cama recebe painéis de madeira com sanca iluminada e uma cabeceira estofada contínua em tom terroso, com arandelas articuladas em latão e a luminária de papel suspensa ao centro.",
+          "A penteadeira se integra a uma cristaleira iluminada e às mesas de cabeceira. Do outro lado, a estante vazada com luz embutida e o painel da TV criam um canto de leitura com poltrona de couro, sobre o papel de parede listrado."],
+   feito:["Painel de madeira com sanca iluminada","Cabeceira estofada contínua","Penteadeira integrada à cristaleira iluminada","Mesas de cabeceira com tampo em pedra","Estante vazada com iluminação embutida","Canto de leitura com poltrona de couro"],
+   versoes:{"Imagens":["u01","u02","u03","u04","u05","u06","u07","u08","u09","u10","u11"]}},
+  {id:"lavabo-bj",nome:"Lavabo BJ",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"l01",capa2:"l02",
+   lead:"Um lavabo sob a escada, com textura, pedra verde e madeira iluminada.",
+   texto:["O espaço inclinado sob a escada foi revestido com textura em tom areia, que envolve paredes e teto, e o piso em xadrez terracota e creme aquece o ambiente.",
+          "A bancada esculpida em pedra verde ripada flutua diante de um nicho de madeira com luz embutida, com espelho redondo e torneira de bica alta. Atrás da bacia, a meia parede em revestimento artesanal termina numa prateleira de pedra iluminada."],
+   feito:["Bancada esculpida em pedra verde ripada","Nicho de madeira com iluminação embutida","Espelho redondo e torneira de bica alta","Textura em paredes e teto","Piso em xadrez terracota e creme","Prateleira de pedra com luz indireta"],
+   versoes:{"Imagens":["l01","l02","l03"]}},
+  {id:"area-de-servicos-bj",nome:"Área de serviços BJ",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"a01",capa2:"a02",
+   lead:"Uma área de serviço clara e organizada, com madeira, verde-água e luz natural.",
+   texto:["A marcenaria em madeira com portas almofadadas organiza todo o espaço: armário alto, nicho para a lava e seca empilhada e uma base de vaga para o robô aspirador.",
+          "No fundo, o tanque ganha um nicho revestido em azulejos verde-água verticais, com bancada clara, torneira em cobre e uma prateleira iluminada sob a janela."],
+   feito:["Marcenaria em madeira com portas almofadadas","Nicho para lava e seca empilhada","Vaga para robô aspirador","Revestimento verde-água vertical","Bancada clara com torneira em cobre","Prateleira iluminada sob a janela"],
+   versoes:{"Imagens":["a01","a02","a03","a04","a05","a06"]}},
+  {id:"cozinha-bj",nome:"Cozinha BJ",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"k01",capa2:"k05",
+   lead:"Uma cozinha de madeira e luz, com copa integrada e vista para as árvores.",
+   texto:["Na copa, a mesa redonda de pé escultural fica diante de uma parede de blocos de vidro emoldurada em painéis de madeira, com sanca iluminada e pendente clássico ao centro.",
+          "A cozinha em L combina armários em madeira e laca clara, janela em fita sobre a pia, metais em cobre e uma estante iluminada com fundo em pedra verde. Portas ocultas na marcenaria e uma cristaleira com cantinho do café completam o espaço."],
+   feito:["Parede de blocos de vidro na copa","Painéis de madeira com portas ocultas e sanca iluminada","Mesa redonda com pé escultural","Estante iluminada com fundo em pedra verde","Cozinha em L com janela em fita e metais em cobre","Cristaleira iluminada com cantinho do café"],
+   versoes:{"Imagens":["k01","k02","k03","k04","k05","k06","k07","k08","k09","k10"]}},
+  {id:"sauna-bj",nome:"Sauna BJ",tipo:"Residencial",local:"Botafogo, Rio de Janeiro, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"n01",capa2:"n02",
+   lead:"Uma sauna inteiramente revestida em ripas de madeira, com luz que contorna cada plano.",
+   texto:["Paredes, teto, piso e bancos recebem ripas finas de madeira, que dão unidade ao espaço e conforto ao toque.",
+          "Os bancos em dois níveis têm iluminação embutida por baixo, e fitas de luz marcam o encontro entre os planos. Uma janela emoldurada abre a sauna para a área social e a vista."],
+   feito:["Revestimento integral em ripas de madeira","Bancos em dois níveis","Iluminação embutida sob os bancos","Fitas de luz no encontro dos planos","Janela emoldurada para a área social"],
+   versoes:{"Imagens":["n01","n02"]}},
+  {id:"casa-gt",nome:"Casa GT",tipo:"Residencial",local:"Angra dos Reis, RJ",ano:"",escopo:"Projeto de arquitetura e imagens 3D",
+   capa:"g01",capa2:"g04",
+   lead:"Uma casa térrea de linhas horizontais, onde pedra, madeira e vidro desenham a fachada.",
+   texto:["Uma grande laje em balanço atravessa a fachada e abriga a garagem e a entrada, unindo os volumes da casa sob uma única linha.",
+          "Nas extremidades, um volume revestido em pedra natural e outro em madeira marcam a composição. Entre eles, o cobogó de madeira e a pele de vidro equilibram privacidade e luz, e a escada com iluminação embutida conduz até a porta pivotante."],
+   feito:["Laje em balanço sobre garagem e entrada","Volume revestido em pedra natural","Volume e painéis em madeira","Cobogó de madeira e fachada em vidro","Porta pivotante de destaque","Escada com iluminação embutida e paisagismo"],
+   versoes:{"Imagens":["g01","g02","g03","g04","g05","g06","g07"]}},
+  {id:"sala-de-cinema",nome:"Sala de cinema",tipo:"Interiores",local:"Angra dos Reis, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"s01",capa2:"s03",
+   lead:"Uma sala de cinema em casa, envolvida em madeira e luz.",
+   texto:["Painéis de madeira escura revestem paredes e teto em camadas, e linhas de luz embutida desenham o ambiente e guiam o olhar até a tela.",
+          "Sofás modulares em bouclé formam fileiras confortáveis, uma galeria de cartazes ocupa a parede do fundo, e um bar com bancada em pedra, cuba de apoio e adega completa a experiência."],
+   feito:["Revestimento em madeira em paredes e teto","Iluminação linear embutida em camadas","Sofás modulares em fileiras","Painel da TV com prateleira em pedra","Bar com bancada em pedra e adega","Galeria de cartazes na parede do fundo"],
+   versoes:{"Imagens":["s01","s02","s03","s04","s05","s06","s07","s08"]}},
+  {id:"consultorio",nome:"Consultório médico",tipo:"Comercial",local:"Volta Redonda, RJ",ano:"2026",escopo:"Interiores, projeto executivo e lista de compras",
+   capa:"c04",capa2:"c01",
+   lead:"Um consultório acolhedor, com identidade forte e tudo no lugar.",
+   texto:["O verde profundo, a madeira e os detalhes dourados criam a identidade do espaço desde a recepção, onde um banco estofado em gomos e um balcão de cantos arredondados recebem os pacientes.",
+          "No consultório, a mesa de desenho orgânico com pé dourado fica junto à janela, e a marcenaria organiza a bancada técnica, os armários e o apoio de atendimento sem deixar nada à vista."],
+   feito:["Recepção com banco estofado sob medida","Balcão de atendimento em madeira com iluminação embutida","Parede verde de identidade com letreiro","Mesa orgânica com pé dourado","Bancada técnica com cuba e prateleiras iluminadas","Lavabo em verde, madeira e pedra"],
+   versoes:{"Imagens":["c04","c01","c02","c03","c05","c06","c07","c08","c09","c10","c11","c12","c13","c14","c15","c16"]}},
+  {id:"consultorio-b",nome:"Consultório B.",tipo:"Comercial",local:"Volta Redonda, RJ",ano:"",escopo:"Projeto de interiores e imagens 3D",
+   capa:"b01",capa2:"b02",
+   lead:"Um consultório de psicologia acolhedor para adultos e crianças, cheio de cor e de afeto.",
+   texto:["Na recepção, um mural de silhuetas femininas em terracota divide a parede com o amarelo do letreiro, e poltronas curvas criam uma espera tranquila, com um cantinho de café ao lado.",
+          "Na sala de atendimento, faixas onduladas em laranja, branco e amarelo envolvem o espaço. Uma espiral de luz marca a parede da mesa, e o cantinho da arte, com rolo de papel, livros e tapete, recebe o atendimento infantil."],
+   feito:["Mural de silhuetas na recepção","Letreiro em relevo sobre parede amarela","Cantinho de café com espiral pintada","Porta com arco em duas cores","Espiral de luz na sala de atendimento","Cantinho da arte para o atendimento infantil"],
+   versoes:{"Imagens":["b01","b02","b03","b04","b05","b06","b07","b08","b09","b10","b11","b12","b13"]}},
+  {id:"area-gourmet",nome:"Área comum de edifício",tipo:"Residencial",local:"Volta Redonda, RJ",ano:"2026",escopo:"Estudo preliminar e imagens 3D",
+   capa:"m2-08",capa2:"m1-11",
+   lead:"A cobertura sem uso de um edifício virou o espaço de convivência dos moradores.",
+   texto:["O terraço tinha piso gasto, paredes sem acabamento e uma churrasqueira escondida num canto. A proposta criou um ambiente coberto e iluminado, aberto para a vista das árvores, com mesa para doze pessoas, bancada de apoio e um canto de estar.",
+          "O projeto foi desenvolvido em duas materialidades para comparação: um pergolado de madeira, mais quente, e um pergolado metálico, mais leve e contemporâneo."],
+   feito:["Pergolado com cobertura de vidro","Fechamento em esquadrias de vidro","Bancada com cuba junto à churrasqueira","Revestimento de destaque na parede da bancada","Iluminação de parede para o uso à noite","Layout com duas mesas e circulação livre"],
+   versoes:{
+     "Madeira":["m2-08","m2-09","m2-04","m2-02","m2-03","m2-07","m2-05","m2-06","m2-01"],
+     "Metálico":["m1-11","m1-06","m1-10","m1-02","m1-03","m1-04","m1-09","m1-05","m1-08","m1-07","m1-01"]
+   }},
+];
+PROJETOS.sort((a,b)=>a.nome.localeCompare(b.nome,"pt",{sensitivity:"base"}));
+PROJETOS.sort((a,b)=>a.nome.localeCompare(b.nome,"pt",{sensitivity:"base"}));
+const CATEGORIAS=["Todos","Residencial","Comercial"];
+const catDe=p=>p.tipo==="Comercial"?"Comercial":"Residencial";
+
+/* =====================================================================
+   MOTOR DAS PÁGINAS
+   ===================================================================== */
+const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const app=document.getElementById('app');
+const msgBase="Olá! Vi o site da Nualē e quero conversar sobre um projeto.";
+const zapLink=(n,t)=>`https://wa.me/${n}?text=${encodeURIComponent(t||msgBase)}`;
+const seta=`<span class="c" aria-hidden="true">→</span>`;
+const ativos=()=>PROJETOS.filter(p=>!p.breve);
+const todasFotos=p=>p.versoes?Object.values(p.versoes)[0]:[];
+
+function card(p){
+  if(p.breve) return `<div class="card breve"><div class="im"><span>Imagens em breve</span></div><div class="info"><h3>${p.nome}</h3><span class="meta">${p.tipo}${p.ano?" · "+p.ano:""}</span></div></div>`;
+  return `<a class="card" href="#projeto-${p.id}"><div class="im"><img class="a" src="img/${p.capa}.jpg" alt="${p.nome}">${p.capa2?`<img class="b" src="img/${p.capa2}.jpg" alt="">`:''}</div><div class="info"><h3>${p.nome}</h3><span class="meta">${p.local||catDe(p)}</span></div></a>`;
+}
+const diferencial=()=>`<section class="dif pad" aria-labelledby="difT">
+  <div class="dif-txt">
+    <p class="rot">Nosso diferencial</p>
+    <h2 id="difT">Acompanhe seu projeto <em>quase em tempo real</em>.</h2>
+    <p class="dif-lead">Cada cliente da Nualē recebe acesso ao seu aplicativo de acompanhamento. Você vê o que já foi feito, o que vem a seguir e tudo o que foi decidido, a qualquer hora, sem precisar perguntar.</p>
+    <ul class="dif-lista">
+      <li><b>Etapas e prazos</b><span>O andamento de cada fase do projeto, atualizado pela equipe.</span></li>
+      <li><b>Reuniões registradas</b><span>As decisões de cada reunião ficam salvas para consulta.</span></li>
+      <li><b>Visitas e pagamentos</b><span>Datas de visitas e parcelas organizadas em um só lugar.</span></li>
+      <li><b>Entregas do projeto</b><span>Imagens, projeto executivo e lista de compras à mão.</span></li>
+    </ul>
+  </div>
+  <div class="cel-wrap" aria-hidden="true">
+    <div class="cel">
+      <div class="cel-tela">
+        <div class="cel-top"><img src="img/logo-ouro.png" alt=""><span>Meu projeto</span></div>
+        <div class="cel-card">
+          <small>Projeto em andamento</small>
+          <b>Seu apartamento</b>
+          <div class="cel-prog"><i id="celBar"></i></div>
+          <div class="cel-pct"><span id="celPct">0%</span><span>concluído</span></div>
+        </div>
+        <ul class="cel-etapas">
+          <li class="ok"><i></i>Briefing<em>concluído</em></li>
+          <li class="ok"><i></i>Estudo preliminar<em>concluído</em></li>
+          <li class="ag"><i></i>Imagens 3D<em>em andamento</em></li>
+          <li><i></i>Projeto executivo<em>próxima</em></li>
+          <li><i></i>Entrega final<em>próxima</em></li>
+        </ul>
+        <div class="cel-aviso" id="celAviso"><b>Nova atualização</b><span>Imagens 3D da sala disponíveis</span></div>
+      </div>
+    </div>
+  </div>
+</section>`;
+function ligaDif(){
+  const bar=app.querySelector('#celBar'), pct=app.querySelector('#celPct'), av=app.querySelector('#celAviso'); if(!bar)return;
+  const alvo=58;
+  const roda=()=>{ if(reduz){bar.style.width=alvo+'%';pct.textContent=alvo+'%';av.classList.add('on');return;}
+    const t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1600);const v=Math.round(alvo*(1-Math.pow(1-k,3)));bar.style.width=v+'%';pct.textContent=v+'%';if(k<1)requestAnimationFrame(f);else setTimeout(()=>av.classList.add('on'),400);})(t0);};
+  const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){io.disconnect();roda();}},{threshold:.35}); io.observe(app.querySelector('.cel'));
+}
+const cta=()=>`<section class="faixa-cta pad"><h2>Tem um espaço para <em>transformar</em>?</h2><a class="seta-link" href="#contato">Fale com a gente ${seta}</a></section>`;
+
+/* ---------- INÍCIO ---------- */
+let trocaTimer=null;
+function poolImagens(){const out=[];ativos().forEach(p=>Object.values(p.versoes||{}).forEach(l=>l.forEach(f=>out.push({f,p:p.id}))));return out;}
+function embaralha(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pgInicio(){
+  const vistos=new Set(), imgs=embaralha(poolImagens()).filter(x=>!vistos.has(x.p)&&vistos.add(x.p)).slice(0,5);
+  return `<div class="pagina">
+  <section class="home-topo pad">
+    <div class="ht-txt">
+      <p class="rot">Arquitetura &amp; Interiores</p>
+      <h1><span><i>Espaços pensados</i></span> <span><i>para a <em>vida real.</em></i></span></h1>
+    </div>
+    <div class="ht-lado">
+      <p>Projetos residenciais, de interiores e comerciais, do estudo de layout às imagens 3D, ao projeto executivo e à lista de compras.</p>
+      <a class="seta-link" href="#portfolio">Ver portfólio ${seta}</a>
+    </div>
+  </section>
+  <section class="colagem pad" aria-label="Imagens de projetos">${imgs.map((x,i)=>`<a class="tile t${i}" data-p="${x.p}" href="#projeto-${x.p}" aria-label="Ver projeto"><img src="img/${x.f}.jpg" alt=""></a>`).join('')}</section>
+  <section class="intro pad">
+    <p class="rot">O escritório</p>
+    <div>
+      <p class="grande">Desenhamos espaços a partir de como você vive. Cada decisão de layout, material e luz é <em>apresentada e aprovada</em> com você, do primeiro estudo à lista de compras.</p>
+      <div class="acoes"><a class="seta-link" href="#sobre">Conheça a Nualē ${seta}</a></div>
+    </div>
+  </section>
+  ${diferencial()}
+  <section class="pad">
+    <div class="secao-topo"><h2>Projetos</h2><a class="seta-link" href="#portfolio">Ver portfólio ${seta}</a></div>
+    <div class="cards">${["casa-de-campo-refugio","suite-bj","casa-gt"].map(id=>PROJETOS.find(p=>p.id===id)).filter(Boolean).map(card).join('')}</div>
+  </section>
+  ${cta()}
+  </div>`;
+}
+function ligaInicio(){
+  clearInterval(trocaTimer); if(reduz) return;
+  const pool=poolImagens(); let k=0;
+  trocaTimer=setInterval(()=>{
+    const tiles=[...app.querySelectorAll('.colagem .tile')]; if(!tiles.length){clearInterval(trocaTimer);return;}
+    const t=tiles[(k++*3)%tiles.length];
+    const projUsados=new Set(tiles.filter(o=>o!==t).map(o=>o.dataset.p)); projUsados.add(t.dataset.p);
+    const livres=pool.filter(x=>!projUsados.has(x.p)); if(!livres.length)return;
+    const x=livres[Math.floor(Math.random()*livres.length)]; t.dataset.p=x.p;
+    const im=new Image(); im.src=`img/${x.f}.jpg`; im.alt=""; im.className="novo";
+    im.onload=()=>{t.appendChild(im);t.href=`#projeto-${x.p}`;requestAnimationFrame(()=>im.classList.add("on"));setTimeout(()=>{while(t.children.length>1)t.removeChild(t.firstChild);},1500);};
+  },3200);
+}
+
+/* ---------- PORTFÓLIO ---------- */
+function pgPortfolio(){
+  const cats=CATEGORIAS.filter(c=>c==="Todos"||PROJETOS.some(p=>catDe(p)===c));
+  return `<div class="pagina">
+  <section class="cab-pag pad"><h1>Portfólio</h1><p>Casas, quartos e espaços comerciais pensados a partir de quem vive e trabalha neles.</p></section>
+  <section class="pad">
+    <div class="filtros" role="group" aria-label="Filtrar por tipo">${cats.map((c,i)=>`<button type="button" data-c="${c}" aria-pressed="${i===0}"><span class="sub">${c}</span></button>`).join('')}</div>
+    <div class="cards" id="listaProj">${PROJETOS.map(p=>`<div data-t="${catDe(p)}">${card(p)}</div>`).join('')}</div>
+  </section>
+  ${cta()}
+  </div>`;
+}
+function ligaPortfolio(){
+  const b=app.querySelectorAll('.filtros button');
+  b.forEach(x=>x.onclick=()=>{b.forEach(y=>y.setAttribute('aria-pressed',y===x));const c=x.dataset.c;
+    app.querySelectorAll('#listaProj>div').forEach(d=>{const ok=c==="Todos"||d.dataset.t===c;d.hidden=!ok;if(ok&&!reduz&&d.animate)d.animate([{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'none'}],{duration:600,easing:'cubic-bezier(.22,.7,.15,1)'});});});
+}
+
+/* ---------- PROJETO ---------- */
+let versaoAtual=null, projAtual=null;
+function pgProjeto(id){
+  const p=PROJETOS.find(x=>x.id===id&&!x.breve); if(!p) return pgPortfolio();
+  projAtual=p; versaoAtual=Object.keys(p.versoes)[0];
+  const lista=ativos(); const prox=lista[(lista.indexOf(p)+1)%lista.length];
+  const nv=Object.keys(p.versoes);
+  return `<div class="pagina">
+  <div class="pad"><a class="voltar" href="#portfolio">← <span class="sub">Portfólio</span></a></div>
+  <section class="proj-topo pad">
+    <div><p class="rot">${p.tipo}${p.ano?" · "+p.ano:""}</p><h1 style="margin-top:18px">${p.nome}</h1>${p.local?`<span class="proj-cidade">${p.local}</span>`:""}</div>
+    <div class="ficha">
+      <div><span>Tipo</span><b>${p.tipo}</b></div>${p.ano?`<div><span>Ano</span><b>${p.ano}</b></div>`:""}
+      ${p.local?`<div><span>Local</span><b>${p.local}</b></div>`:""}<div style="grid-column:1/-1"><span>Escopo</span><b>${p.escopo}</b></div>
+    </div>
+  </section>
+  <div class="proj-capa pad" style="padding:0;margin-inline:var(--g)"><img src="img/${p.capa}.jpg" alt="${p.nome}"></div>
+  <section class="texto-proj pad">
+    <p class="rot">Sobre o projeto</p>
+    <div class="corpo">
+      <p class="lead">${p.lead}</p>
+      ${p.texto.map(t=>`<p>${t}</p>`).join('')}
+      <div class="feito">${p.feito.map((f,i)=>`<div><b>${String(i+1).padStart(2,'0')}</b><span>${f}</span></div>`).join('')}</div>
+    </div>
+  </section>
+  <section class="pad">
+    <div class="secao-topo"><h2>Imagens</h2>${nv.length>1?`<div class="versoes" role="group" aria-label="Versão">${nv.map((v,i)=>`<button type="button" data-v="${v}" aria-pressed="${i===0}">${v}</button>`).join('')}</div>`:''}</div>
+    <div class="grade" id="grade"></div>
+  </section>
+  ${lista.length>1?`<a class="prox pad" href="#projeto-${prox.id}"><div><p class="rot">Próximo projeto</p><h2 style="margin-top:10px">${prox.nome}</h2></div><span class="seta-link">${seta}</span></a>`:`<a class="prox pad" href="#portfolio"><div><p class="rot">Continue</p><h2 style="margin-top:10px">Ver todo o portfólio</h2></div><span class="seta-link">${seta}</span></a>`}
+  </div>`;
+}
+function montaGrade(){
+  const g=document.getElementById('grade'); if(!g)return; const fotos=projAtual.versoes[versaoAtual];
+  g.innerHTML=fotos.slice(0,7).map((f,i)=>`<figure class="fig s${i}" tabindex="0" role="button" aria-label="Ampliar imagem ${i+1}" data-i="${i}"><img src="img/${f}.jpg" alt="${projAtual.nome}, imagem ${i+1}"><figcaption>${String(i+1).padStart(2,'0')}${Object.keys(projAtual.versoes).length>1?' · '+versaoAtual:''}</figcaption></figure>`).join('')
+   + (fotos.length>7?`<div style="grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:12px"><button class="seta-link" id="verTodas" type="button"><span class="sub">Ver as ${fotos.length} imagens</span> ${seta}</button></div>`:'');
+  g.querySelectorAll('.fig').forEach(fg=>{const ab=()=>abrir(+fg.dataset.i);fg.onclick=ab;fg.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ab();}};});
+  const vt=document.getElementById('verTodas'); if(vt) vt.onclick=()=>abrir(0);
+}
+function ligaProjeto(){
+  montaGrade();
+  app.querySelectorAll('.versoes button').forEach(b=>b.onclick=()=>{
+    if(b.dataset.v===versaoAtual)return; versaoAtual=b.dataset.v;
+    app.querySelectorAll('.versoes button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const g=document.getElementById('grade');
+    if(reduz||!g.animate){montaGrade();return;}
+    g.animate([{opacity:1},{opacity:0}],{duration:250,fill:'forwards'}).onfinish=()=>{montaGrade();g.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:600,easing:'cubic-bezier(.22,.7,.15,1)',fill:'forwards'});};
+  });
+}
+
+/* ---------- SOBRE ---------- */
+function pgSobre(){
+  return `<div class="pagina">
+  <section class="sobre-hero pad">
+    <div class="txt">
+      <h1>Sobre a Nualē</h1>
+      <div style="display:grid;gap:22px">
+        <p class="grande">Somos um escritório de arquitetura e interiores conduzido pelas arquitetas Anna Julia Portilho e Laís Hotz.</p>
+        <p>Trabalhamos com projetos residenciais, de interiores e comerciais. Nosso processo é feito para que você entenda e aprove cada decisão, e termine o projeto com tudo o que precisa para executar a obra e fazer as compras com segurança.</p>
+      </div>
+    </div>
+    <div class="img"><img src="img/g01.jpg" alt="Fachada da Casa GT, projeto da Nualē em Angra dos Reis"></div>
+  </section>
+
+  <section class="posic pad">
+    <p class="rot">Nosso posicionamento</p>
+    <p class="posic-grande"><span>Não fazemos projetos de catálogo.</span><span>Cada espaço é desenhado</span><span><em>pra quem vai viver nele.</em></span></p>
+    <div class="posic-cols">
+      <p>Antes de escolher uma cor ou um material, queremos entender a sua rotina: quem acorda primeiro, onde a família se reúne, o que precisa estar sempre à mão, o que incomoda na casa de hoje.</p>
+      <p>É dessa escuta que nascem o layout, a marcenaria e cada detalhe. Por isso nenhum projeto nosso se repete: ele foi pensado para uma pessoa, uma família ou um negócio específico, e só faz sentido para eles.</p>
+    </div>
+  </section>
+
+  <section class="bloco pad">
+    <div class="secao-topo"><h2>Quem somos</h2></div>
+    <div class="socias">${CONTATOS.map(c=>`<div class="socia"><div class="mono" aria-hidden="true">${c.nome[0]}</div><div><p class="rot">${c.cargo}</p><h3 style="margin-top:8px">${c.completo}</h3><a class="sub" href="${zapLink(c.zap)}" target="_blank" rel="noopener">WhatsApp ${c.fone}</a><br><a class="sub" href="${igLink(c.ig)}" target="_blank" rel="noopener">@${c.ig}</a></div></div>`).join('')}</div>
+  </section>
+
+  ${diferencial()}
+  <section class="pad">
+    <div class="secao-topo"><h2>O que nos guia</h2></div>
+    <div class="valores">
+      <div><b>01</b><h3>A rotina primeiro</h3><p>O projeto nasce de como você usa o espaço no dia a dia, não de uma tendência.</p></div>
+      <div><b>02</b><h3>Decisões claras</h3><p>Cada etapa é apresentada e aprovada em ata antes de seguir para a próxima.</p></div>
+      <div><b>03</b><h3>Pronto para executar</h3><p>Você recebe o detalhamento e a lista de compras para a obra sair como desenhada.</p></div>
+    </div>
+  </section>
+
+  <section class="bloco pad">
+    <div class="secao-topo"><h2>Como trabalhamos</h2></div>
+    <ol class="etapas">
+      <li><h3>Briefing</h3><p>Conversa sobre sua rotina, gostos e orçamento, com medição e levantamento do espaço.</p></li>
+      <li><h3>Estudo preliminar</h3><p>Opções de layout e de materialidade para comparar e escolher o caminho.</p></li>
+      <li><h3>Imagens 3D</h3><p>Cada ambiente com materiais, cores e iluminação definidos, ajustado até ficar do seu jeito.</p></li>
+      <li><h3>Projeto executivo</h3><p>Plantas, vistas e detalhamentos com todas as medidas para a obra.</p></li>
+      <li><h3>Entrega final</h3><p>Todo o material reunido, com lista de compras e fornecedores indicados para orçar.</p></li>
+    </ol>
+  </section>
+
+  <section class="pad">
+    <div class="secao-topo"><h2>O que você recebe</h2></div>
+    <div class="entregas">
+      <div><h3>Caderno de imagens 3D</h3><p>Cada ambiente em imagens realistas.</p></div>
+      <div><h3>Projeto executivo</h3><p>Plantas, vistas e detalhamentos.</p></div>
+      <div><h3>Lista de compras</h3><p>Itens por ambiente, com links e referências.</p></div>
+      <div><h3>Orçamentos</h3><p>Fornecedores e profissionais indicados.</p></div>
+      <div><h3>Cronograma online</h3><p>Etapas, prazos e reuniões em uma página sua.</p></div>
+      <div><h3>Atas de aprovação</h3><p>Cada decisão registrada.</p></div>
+    </div>
+  </section>
+  ${cta()}
+  </div>`;
+}
+
+/* ---------- CONTATO ---------- */
+function pgContato(){
+  const tipos=["Casa ou apartamento","Um ambiente","Área gourmet","Comercial","Consultório"];
+  return `<div class="pagina"><section class="contato pad">
+    <p class="rot">Contato</p>
+    <h1>Vamos <em>conversar</em>.</h1>
+    <div class="pessoas">${CONTATOS.map(c=>`<a class="pessoa zap" data-n="${c.zap}" href="${zapLink(c.zap)}" target="_blank" rel="noopener"><span><small>${c.cargo}</small><span class="nm">${c.completo}</span></span><span class="tel">WhatsApp ${c.fone}</span><span class="ir" aria-hidden="true">→</span></a>`).join('')}</div>
+    <div class="igs"><p class="rot">Instagram</p><div class="ig-lista">${[IG_ESCRITORIO,...CONTATOS.map(c=>c.ig)].map(h=>`<a href="${igLink(h)}" target="_blank" rel="noopener"><span>@${h}</span><span aria-hidden="true">↗</span></a>`).join('')}</div></div>
+    <div class="form">
+      <div><p class="rot">Adiante sua conversa</p><p style="color:rgba(246,235,214,.75);margin-top:12px;max-width:34ch">Preencha e escolha com quem falar. A mensagem abre pronta no WhatsApp.</p></div>
+      <div class="campos">
+        <div class="dois"><div><label for="fNome">Seu nome</label><input id="fNome" autocomplete="name"></div><div><label for="fCidade">Cidade</label><input id="fCidade" autocomplete="address-level2"></div></div>
+        <div><span id="tipoL" style="display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);margin-bottom:10px">Tipo de projeto</span>
+          <div class="tipos" role="radiogroup" aria-labelledby="tipoL">${tipos.map((t,i)=>`<label style="margin:0;letter-spacing:0;text-transform:none;font-size:inherit;color:inherit"><input type="radio" name="tipo" value="${t}" ${i===0?'checked':''}><span>${t}</span></label>`).join('')}</div></div>
+        <div><label for="fMsg">O que você imagina</label><textarea id="fMsg" placeholder="Ex.: quero integrar sala e cozinha"></textarea></div>
+        <div class="envia">${CONTATOS.map(c=>`<a class="zap" data-n="${c.zap}" href="#" target="_blank" rel="noopener">Enviar para ${c.nome} →</a>`).join('')}</div>
+        <p class="aviso">A mensagem só é enviada quando você tocar em enviar no WhatsApp.</p>
+      </div>
+    </div>
+  </section></div>`;
+}
+function ligaContato(){
+  const atual=()=>{
+    const n=document.getElementById('fNome').value.trim(), cid=document.getElementById('fCidade').value.trim(), m=document.getElementById('fMsg').value.trim();
+    const t=document.querySelector('input[name="tipo"]:checked').value.toLowerCase();
+    let s=`Olá!${n?` Meu nome é ${n}.`:''} Vi o site da Nualē e tenho interesse em um projeto: ${t}${cid?`, em ${cid}`:''}.`; if(m) s+=`\n\n${m}`;
+    app.querySelectorAll('.envia a.zap').forEach(a=>a.href=zapLink(a.dataset.n,s));
+  };
+  app.querySelector('.form').addEventListener('input',atual); atual();
+}
+
+/* ---------- ROTEADOR ---------- */
+const ROTAS={inicio:[pgInicio,()=>{ligaInicio();ligaDif();}],portfolio:[pgPortfolio,ligaPortfolio],sobre:[pgSobre,ligaDif],contato:[pgContato,ligaContato]};
+let primeira=true;
+function render(){
+  const h=(location.hash||'#inicio').slice(1);
+  let html,liga,chave=h;
+  if(h.startsWith('projeto-')){html=pgProjeto(h.slice(8));liga=ligaProjeto;chave='portfolio';}
+  else{const r=ROTAS[h]||ROTAS.inicio;html=r[0]();liga=r[1];chave=ROTAS[h]?h:'inicio';}
+  const troca=()=>{
+    app.innerHTML=html; liga&&liga(); window.scrollTo(0,0);
+    document.querySelectorAll('#navPrin a').forEach(a=>a.classList.toggle('on',a.dataset.r===chave));
+    document.title=h.startsWith('projeto-')?`${(projAtual||{}).nome||'Projeto'} · Nualē`:({inicio:'Nualē · Arquitetura & Interiores',portfolio:'Portfólio · Nualē',sobre:'Sobre · Nualē',contato:'Contato · Nualē'})[chave];
+    revela(); if(!primeira) app.focus({preventScroll:true});
+  };
+  fechaGaveta();
+  if(primeira||reduz){troca();primeira=false;return;}
+  const c=document.getElementById('cortina');
+  c.classList.remove('sai'); c.classList.add('cobre');
+  setTimeout(()=>{troca();c.classList.remove('cobre');c.classList.add('sai');setTimeout(()=>c.classList.remove('sai'),650);},520);
+}
+addEventListener('hashchange',render);
+
+/* revelação das imagens ao rolar */
+let io=null;
+function revela(){
+  if(reduz||!('animate' in Element.prototype))return;
+  io&&io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.animate([{clipPath:'inset(10% 0 0 0)',transform:'translateY(28px)'},{clipPath:'inset(0 0 0 0)',transform:'none'}],{duration:1100,easing:'cubic-bezier(.22,.7,.15,1)'});io.unobserve(e.target);}}),{threshold:.08});
+  app.querySelectorAll('.card .im,.fig,.sobre-hero .img,.proj-capa').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight)io.observe(el);});
+}
+new MutationObserver(()=>revela()).observe(app,{childList:true,subtree:false});
+
+/* cabeçalho, menu */
+const cab=document.getElementById('cab'), gav=document.getElementById('gaveta'), mb=document.getElementById('menuBtn');
+addEventListener('scroll',()=>cab.classList.toggle('solido',scrollY>30),{passive:true});
+function fechaGaveta(){gav.classList.remove('on');mb.setAttribute('aria-expanded',false);mb.textContent='Menu';}
+mb.onclick=()=>{const on=gav.classList.toggle('on');mb.setAttribute('aria-expanded',on);mb.textContent=on?'Fechar':'Menu';};
+
+/* visualizador */
+const vis=document.getElementById('vis'), tr=document.getElementById('visTrilho'), ct=document.getElementById('visC');
+let foco=null;
+function abrir(i){
+  foco=document.activeElement; const l=projAtual.versoes[versaoAtual];
+  document.getElementById('visT').textContent=projAtual.nome; document.getElementById('visS').textContent=Object.keys(projAtual.versoes).length>1?'Versão '+versaoAtual.toLowerCase():projAtual.tipo;
+  tr.innerHTML=l.map((f,k)=>`<div class="slide"><img src="img/${f}.jpg" alt="${projAtual.nome}, imagem ${k+1}"></div>`).join('');
+  vis.classList.add('open'); document.body.style.overflow='hidden';
+  requestAnimationFrame(()=>{tr.scrollLeft=i*tr.clientWidth;conta();}); document.getElementById('visX').focus();
+}
+function fechar(){vis.classList.remove('open');document.body.style.overflow='';foco&&foco.focus();}
+function conta(){if(!projAtual)return;const n=projAtual.versoes[versaoAtual].length;const i=Math.round(tr.scrollLeft/tr.clientWidth);ct.textContent=`${String(i+1).padStart(2,'0')} / ${String(n).padStart(2,'0')}`;}
+const vai=d=>tr.scrollBy({left:d*tr.clientWidth,behavior:reduz?'auto':'smooth'});
+tr.addEventListener('scroll',conta,{passive:true});
+document.getElementById('visX').onclick=fechar;
+document.getElementById('visA').onclick=()=>vai(-1); document.getElementById('visP').onclick=()=>vai(1);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&gav.classList.contains('on'))fechaGaveta();if(!vis.classList.contains('open'))return;if(e.key==='Escape')fechar();if(e.key==='ArrowLeft')vai(-1);if(e.key==='ArrowRight')vai(1);});
+
+render();
+</script>
+</body>
+</html>
